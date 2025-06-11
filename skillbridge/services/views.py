@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import SkillServiceForm
 from django.contrib.auth.decorators import login_required
+from .models import SkillService
 
 # This view allows a logged-in user (provider) to submit a service @login required
 def submit_service(request):
@@ -15,3 +16,8 @@ def submit_service(request):
     else:
         form = SkillServiceForm()
     return render(request, 'services/submit_service.html', {'form': form})
+
+# Public view: Show approved services
+def service_list(request):
+    services = SkillService.objects.filter(is_approved=True).order_by('-created_at')
+    return render(request, 'services/service_list.html', {'services': services})
