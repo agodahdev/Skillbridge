@@ -8,6 +8,7 @@
 </head>
 <body>
 
+    <!-- Navbar with conditional login/logout/signup-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
     <a class="navbar-brand" href="/">SkillBridge</a>
     <div class="ms-auto">
@@ -17,9 +18,11 @@
         <a class="btn btn-outline-secondary btn-sm" href="{% url 'logout' %}">Logout</a>
         {% else %}
         <a class="btn btn-outline-primary btn-sm"  href="{% url 'login' %}">Login</a>
+        <a class="btn btn-outline-success btn-sm ms-2" href="{% url 'signup' %}">Sign Up</a>
         {% endif %}
     </div>
 </nav>
+    <!-- Specific page content area-->
     <div class="container mt-4">
         {% block content %}
         <!-- Page-specific content goes here-->
