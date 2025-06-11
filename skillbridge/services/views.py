@@ -14,4 +14,4 @@ def submit_service(request):
             return redirect('submission_success')
     else:
         form = SkillServiceForm()
-    return render(request, 'service/submit_service.html', {'form': form})
+    return render(request, 'services/submit_service.html', {'form': form})
