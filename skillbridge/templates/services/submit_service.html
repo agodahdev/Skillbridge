@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Submit a New Service</h2>
-<form   method="post">
+<form method="post" class="mt-4">
     {% csrf_token %}
     {{form.as_p}}
-    <button type="submit">Submit Service</button>
+    <button type="submit" class="btn btn-outline-primary">Submit Service</button>
 </form>
 {% endblock%}

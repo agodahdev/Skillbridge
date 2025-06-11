@@ -10,8 +10,8 @@ def submit_service(request):
         form = SkillServiceForm(request.POST)
         if form.is_valid():
             service = form.save(commit=False)
-            service.provider = request.user #logge-in user
-            service.is_approved = False #must be reviewed by admin
+            service.provider = request.user #lset the current user as provider
+            service.is_approved = False # Admin must approve before showing
             service.save()
             return redirect('submission_success')
     else:
