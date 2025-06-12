@@ -133,3 +133,6 @@ LOGIN_URL = '/accounts/login/'
 #After successful login, go to this URL
 LOGIN_REDIRECT_URL = '/'
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://8000-agodahdev-skillbridge-ln0pmy007zx.ws-eu120.gitpod.io",
+]
