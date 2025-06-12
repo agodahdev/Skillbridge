@@ -29,7 +29,7 @@ import os
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "8000-agodahdev-skillbridge-h2auhjjbo95.ws-eu120.gitpod.io",
+    "8000-agodahdev-skillbridge-ln0pmy007zx.ws-eu120.gitpod.io",
 ]
 
 

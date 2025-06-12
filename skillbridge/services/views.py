@@ -20,8 +20,22 @@ def submit_service(request):
 
 # Public view to Show all approved services
 def service_list(request):
-    services = SkillService.objects.filter(is_approved=True).order_by('-created_at')
-    return render(request, 'services/service_list.html', {'services': services})
+    query = request.GET.get('q')
+    category = request.GET.get('category')
+    services = SkillService.objects.filter(is_approved=True)
+
+    if query:
+        services = services.filter(title_icontains=query)
+
+    if category and category != 'All':
+        services = services.filter(category=category)
+    
+    return render(request, 'services/service_list.html', {
+        'services': services,
+        'query': query or '',
+        'category': category or 'All'
+
+    })
 
 # Home page view
 def home(request):

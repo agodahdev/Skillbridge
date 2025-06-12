@@ -1,19 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Available Service</h2>
+<h2>Available Services</h2>
+
+<!-- Filter Form -->
+
+<form method="get" class="mb-3 d-flex gap-2">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search services....." class="form-control" style="max-width: 300px;">
+
+    <select name="category" class="form-select" style="max-width: 200px">
+        <option value="All" {% if category == 'All' %}selected{% endif %}>All Categories</option>
+        <option value="Tutoring" {% if category == 'Tutoring' %}selected{% endif %}>Tutoring</option>
+        <option value="Design" {% if category == 'Design' %}selected{% endif %}>Design</option>
+        <option value="Programming" {% if category == 'Programming' %}selected{% endif %}>Programming</option>
+        <option value="Translation" {% if category == 'Translation' %}selected{% endif %}>Translation</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filter</button>
+
+</form>
 
 {% if services %}
-<ul>
+
+<div class="list-group">
     {% for service in services %}
-    <li>
-        <strong>{{service.title }}</strong> <br>
-        Category: {{ service.category }} <br>
-        Rate: £{{ service.rate_per_hour }} / hour <br>
-        Posted by: {{service.provider.username }}
-    </li>
-    <hr>
+    <div class="list-group-item">
+        <h5>{{ service.title }}</h5>
+        <p>
+         <strong>Category:</strong> {{ service.category }} <br>
+         <strong>Rate:</strong> £{{ service.rate_per_hour }} / hour <br>
+         <strong>Posted by:</strong> {{service.provider.username }}
+        </p>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% else %}
 <p>No services are currently available</p>
 {% endif %}
