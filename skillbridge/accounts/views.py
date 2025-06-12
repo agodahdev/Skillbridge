@@ -11,3 +11,6 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+def submission_success(request):
+    return render(request, 'services/submission_success.html')

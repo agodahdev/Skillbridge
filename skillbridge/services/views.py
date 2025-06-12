@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .forms import SkillServiceForm
+from .forms import SkillServiceForm, BookingRequestForm
 from django.contrib.auth.decorators import login_required
-from .models import SkillService, BookingRequest, BookingRequestForm
+from .models import SkillService, BookingRequest
 
 # This view allows a logged-in user (provider) to submit a service 
 # @login required
@@ -54,4 +54,7 @@ def book_service(request, service_id):
     else:
         form = BookingRequestForm()
     return render(request, 'services/book_service.html', {'form': form, 'service': service})
+
+def submission_success(request):
+    return render(request, 'services/submission_success.html')
     

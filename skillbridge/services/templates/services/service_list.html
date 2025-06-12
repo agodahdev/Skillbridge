@@ -29,6 +29,7 @@
          <strong>Rate:</strong> £{{ service.rate_per_hour }} / hour <br>
          <strong>Posted by:</strong> {{service.provider.username }}
         </p>
+        <a href="{% url 'book_service' service.id}" class="btn btn-sm btn-primary mt-2">Book This service</a>
     </div>
     {% endfor %}
 </div>
