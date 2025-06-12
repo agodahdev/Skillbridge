@@ -7,6 +7,7 @@ urlpatterns = [
     path('submission-success/', TemplateView.as_view(
         template_name='services/submission_success.html'
     ), name='submission_success'),
-    path('all/', service_list, name='service_list')
+    path('all/', service_list, name='service_list'),
+    path('book/<int:service_id>', book_service, name='book_service'),
 
 ]
