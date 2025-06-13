@@ -76,7 +76,7 @@ def signup(request):
 def dashboard(request):
     my_services = SkillService.objects.filter(provider=request.user)
     my_bookings = BookingRequest.objects.filter(client=request.user)
-    bookings_on_my_services = BookingRequest.objects.filter(service_provider=request.user)
+    bookings_on_my_services = BookingRequest.objects.filter(service__provider=request.user)
 
     return render(request, 'services/dashboard.html', {
         'my_services': my_services,
