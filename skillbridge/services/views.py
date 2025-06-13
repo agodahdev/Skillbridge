@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from .models import SkillService, BookingRequest
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseForbidden
+from django.shortcuts import render, get_object_or_404, redirect
+
 
 # This view allows a logged-in user (provider) to submit a service 
 # @login required
@@ -84,3 +87,40 @@ def dashboard(request):
         'bookings_on_my_services': bookings_on_my_services,
     })
 
+# view to edit an existing service
+# @login_required - only logged-in users can access this
+def edit_service(request, service_id):
+    service = get_object_or_404(SkillService, id=service_id)
+
+    if service.provider != request.user: 
+        return HttpResponseForbidden("You cannot edit this service.")
+
+    if request.method == 'POST':
+        
+        form = SkillServiceForm(request.POST, instance=service)
+        if form.is_valid():
+            form.save() #Save updates to the database
+            return redirect('dashboard') # Go back to the dashboard
+    
+    else: 
+        form = SkillServiceForm(instance=service)
+
+    return render (request, 'services/edit_service.html', {'form': form, 'service':service})
+
+
+# View to delete service
+#@ login_required
+def delete_service(request, service_id):
+    service = get_object_or_404(SkillService, id=service_id)
+
+    if service.provider != request.user:
+        return HttpResponseForbidden("You cannot delete this service.")
+
+    if request.method == 'POST':
+        service.delete() # Remove service from database
+        return redirect('dashboard') # Back to dashboard after deletion
+
+    
+    return render(request, 'services/delete_service.html', {'service': service})
+    
+    
