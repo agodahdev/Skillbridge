@@ -71,3 +71,16 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+# @login_required
+def dashboard(request):
+    my_services = SkillService.objects.filter(provider=request.user)
+    my_bookings = BookingRequest.objects.filter(client=request.user)
+    bookings_on_my_services = BookingRequest.objects.filter(service_provider=request.user)
+
+    return render(request, 'services/dashboard.html', {
+        'my_services': my_services,
+        'my_bookings': my_bookings,
+        'bookings_on_my_services': bookings_on_my_services,
+    })
+

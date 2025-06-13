@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My Dashboard</h2>
+
+<h3>My Submitted Services</h3>
+<ul>
+   {% for service in my_services %}
+    <li> {{ service.title }} - {{ service.category }}</li>
+    {% empty %}
+    <li>No service submitted.</li>
+    {% endfor %}
+</ul>
+
+<h3>My Bookings</h3>
+<ul>
+    {% for booking in my_bookings %}
+    <li>{{ booking.service.title }} on {{ booking.requested_date }}</li>
+    {% empty %}
+    <li>No bookings made.</li>
+    {% endfor %}
+</ul>
+
+<h3>Bookings on My Services</h3>
+<ul>
+    {% for booking in bookings_on_my_services %}
+    <li>{{ booking.client.username }} booked {{ booking.service.title}}</li>
+    {% empty %}
+    <li>No one has booked your services yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
