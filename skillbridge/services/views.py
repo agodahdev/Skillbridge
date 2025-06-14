@@ -6,6 +6,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 
 
 # This view allows a logged-in user (provider) to submit a service 
@@ -100,6 +101,7 @@ def edit_service(request, service_id):
         form = SkillServiceForm(request.POST, instance=service)
         if form.is_valid():
             form.save() #Save updates to the database
+            messages.success(request, "Your service was update successfully.")
             return redirect('dashboard') # Go back to the dashboard
     
     else: 
@@ -118,6 +120,7 @@ def delete_service(request, service_id):
 
     if request.method == 'POST':
         service.delete() # Remove service from database
+        messages.success(request, "Service deleted successfully.")
         return redirect('dashboard') # Back to dashboard after deletion
 
     

@@ -22,6 +22,17 @@
         {% endif %}
     </div>
 </nav>
+{% if messages %}
+    <div class="container mt-3">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags}}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    </div>
+{% endif %}
+
+
     <!-- Specific page content area-->
     <div class="container mt-4">
         {% block content %}
