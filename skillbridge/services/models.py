@@ -28,9 +28,9 @@ class BookingRequest(models.Model):
     messages = models.TextField()
     requested_date = models.DateField()
     status = models.CharField(max_length=10, choices=[
-        ('Pending', 'Pending'),
-        ('Accepted', 'Accepted'),
-        ('Rejected', 'Rejected'),
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
     ], default='Pending')
     created_at= models.DateTimeField(auto_now_add=True)
 
