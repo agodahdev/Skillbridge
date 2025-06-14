@@ -126,4 +126,16 @@ def delete_service(request, service_id):
     
     return render(request, 'services/delete_service.html', {'service': service})
     
-    
+def manage_bookings(request):
+    bookings = BookingRequest.objects.filter(service__provider=request.user)
+
+    if requested.method == 'POST':
+        bookin_id = request.POST.get('booking_id')
+        new_status = request.POST.get('status')
+
+        booking = get_object_or_404(BookingRequest, id=booking_id, service__provider=request.user)
+        booking.status = new_status
+        booking.save()
+        return redirect('manage_bookings')
+
+    return render(request, 'services/manage_bookings.html', {'bookings':bookings})
