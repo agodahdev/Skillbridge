@@ -131,7 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/accounts/login/'
 
 #After successful login, go to this URL
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/services/dashboard'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://8000-agodahdev-skillbridge-f3drrqu90lx.ws-eu120.gitpod.io",
