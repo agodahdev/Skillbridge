@@ -12,4 +12,10 @@ class SkillServiceAdmin(admin.ModelAdmin):
         queryset.update(is_approved=True)
     approve_services.short_description = "Approve selected services"
 
-admin.site.register(BookingRequest)
+
+
+@admin.register(BookingRequest)
+class BookingRequestAdmin(admin.ModelAdmin):
+    list_display = ('service', 'client', 'requested_date', 'status', 'created_at')
+    list_filter = ('status', 'requested_date')
+    search_fields = ('client_username', 'service__title')
