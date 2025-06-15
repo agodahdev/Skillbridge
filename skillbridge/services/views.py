@@ -1,11 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SkillServiceForm, BookingRequestForm
 from django.contrib.auth.decorators import login_required
 from .models import SkillService, BookingRequest
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseForbidden
-from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
 
@@ -129,8 +128,8 @@ def delete_service(request, service_id):
 def manage_bookings(request):
     bookings = BookingRequest.objects.filter(service__provider=request.user)
 
-    if requested.method == 'POST':
-        bookin_id = request.POST.get('booking_id')
+    if request.method == 'POST':
+        booking_id = request.POST.get('booking_id')
         new_status = request.POST.get('status')
 
         booking = get_object_or_404(BookingRequest, id=booking_id, service__provider=request.user)
