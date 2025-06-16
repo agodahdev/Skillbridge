@@ -47,7 +47,8 @@ def home(request):
     return render(request, 'home.html')
 
 def book_service(request, service_id):
-    service = SkillService.objects.get(id=service_id)
+    service = get_object_or_404(SkillService, id=service_id, is_approved=True)
+
     if request.method == 'POST':
         form = BookingRequestForm(request.POST)
         if form.is_valid():
@@ -55,7 +56,8 @@ def book_service(request, service_id):
             booking.client = request.user
             booking.service = service
             booking.save()
-            return redirect('service_list') # or a "booking success" page
+            messages.success(request, "Your booking request has been sent.")
+            return redirect('dashboard') # or a "booking success" page
     else:
         form = BookingRequestForm()
     return render(request, 'services/book_service.html', {'form': form, 'service': service})
