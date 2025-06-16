@@ -9,7 +9,7 @@ from django.contrib import messages
 
 
 # This view allows a logged-in user (provider) to submit a service 
-# @login required
+@login_required
 def submit_service(request):
     if request.method == 'POST':
         form = SkillServiceForm(request.POST)
@@ -46,6 +46,7 @@ def service_list(request):
 def home(request):
     return render(request, 'home.html')
 
+@login_required
 def book_service(request, service_id):
     service = get_object_or_404(SkillService, id=service_id, is_approved=True)
 
@@ -77,7 +78,7 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-# @login_required
+@login_required
 def dashboard(request):
     my_services = SkillService.objects.filter(provider=request.user)
     my_bookings = BookingRequest.objects.filter(client=request.user)
@@ -90,7 +91,7 @@ def dashboard(request):
     })
 
 # view to edit an existing service
-# @login_required - only logged-in users can access this
+@login_required
 def edit_service(request, service_id):
     service = get_object_or_404(SkillService, id=service_id)
 
@@ -102,7 +103,7 @@ def edit_service(request, service_id):
         form = SkillServiceForm(request.POST, instance=service)
         if form.is_valid():
             form.save() #Save updates to the database
-            messages.success(request, "Your service was update successfully.")
+            messages.success(request, "Your service was updated successfully.")
             return redirect('dashboard') # Go back to the dashboard
     
     else: 
@@ -112,7 +113,7 @@ def edit_service(request, service_id):
 
 
 # View to delete service
-#@ login_required
+@login_required
 def delete_service(request, service_id):
     service = get_object_or_404(SkillService, id=service_id)
 
@@ -126,7 +127,8 @@ def delete_service(request, service_id):
 
     
     return render(request, 'services/delete_service.html', {'service': service})
-    
+
+@login_required    
 def manage_bookings(request):
     bookings = BookingRequest.objects.filter(service__provider=request.user)
 
