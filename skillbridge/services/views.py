@@ -81,13 +81,13 @@ def signup(request):
 @login_required
 def dashboard(request):
     my_services = SkillService.objects.filter(provider=request.user)
-    my_bookings = BookingRequest.objects.filter(client=request.user)
-    bookings_on_my_services = BookingRequest.objects.filter(service__provider=request.user)
+    my_client_bookings = BookingRequest.objects.filter(client=request.user)
+    incoming_bookings = BookingRequest.objects.filter(service__provider=request.user)
 
     return render(request, 'services/dashboard.html', {
         'my_services': my_services,
-        'my_bookings': my_bookings,
-        'bookings_on_my_services': bookings_on_my_services,
+        'my_bookings': my_client_bookings,
+        'incoming_bookings': incoming_bookings,
     })
 
 # view to edit an existing service
