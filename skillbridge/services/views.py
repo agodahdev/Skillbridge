@@ -87,7 +87,7 @@ def dashboard(request):
     return render(request, 'services/dashboard.html', {
         'my_services': my_services,
         'my_bookings': my_client_bookings,
-        'incoming_bookings': incoming_bookings,
+        'bookings_on_my_services': incoming_bookings,
     })
 
 # view to edit an existing service
