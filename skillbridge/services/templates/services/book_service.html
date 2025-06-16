@@ -3,7 +3,7 @@
 <h2>Book: {{ service.title }}</h2>
 
 <form method="post">
-     {%. csrf_token %}
+     {% csrf_token %}
      {{ form.as_p }}
      <button type="submit" class="btn btn-success">Submit Booking</button>
 </form>
