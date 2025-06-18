@@ -63,17 +63,24 @@
                 {% if bookings_on_my_services %}
                     <ul class="list-group">
                         {% for booking in bookings_on_my_services %}
-                        <li class="list-group-item">
-                            <strong>{{ booking.client.username }}</strong> booked your service <strong> {{ booking.service.title }}</strong> ({{ booking.status }})
+                        <li class="list-group-item d-flex justify-content-between align-items-center" >
+                            <span>
+                             <strong>{{ booking.client.username }}</strong> booked your service <strong> {{ booking.service.title }}</strong> ({{ booking.status }})   
+                            </span>
+                         {% if booking.id %}
+                         <form method="POST" action="{% url 'cancel_booking' booking.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</button>
+                         </form> 
+                         {% endif %}  
                         </li>
                         {% endfor %}
                     </ul>
                 {% else %}
                     <p class="text-muted">No clients have booked your services</p>
                 {% endif %}
-
             </div>
-
         </div>
 </div>
 {% endblock %}

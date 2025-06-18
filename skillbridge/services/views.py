@@ -142,3 +142,12 @@ def manage_bookings(request):
         return redirect('manage_bookings')
 
     return render(request, 'services/manage_bookings.html', {'bookings':bookings})
+
+@login_required
+def cancel_booking(request, pk):
+    booking = get_object_or_404(BookingRequest, pk=pk, client=request.user)
+    if request.method == 'POST':
+        booking.delete()
+        messages.success(request, "Booking cancelled.")
+        return redirect('dashboard')
+    return HttpResponseForbidden()
