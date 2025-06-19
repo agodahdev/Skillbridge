@@ -5,3 +5,23 @@ input:required:invalid {
 input:required:valid {
   border-color: #28a745;
 }
+
+input:required:invalid {
+  border-color: #dc3545;
+}
+
+input:required:valid {
+  border-color: #28a745;
+}
+
+.card {
+  border-radius: 8px;
+}
+
+.card .form-control {
+  border-radius: 5px;
+}
+
+.card .btn {
+  padding: 10px;
+}
