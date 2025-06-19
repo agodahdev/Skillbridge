@@ -1,40 +1,55 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<h2>Available Services</h2>
 
-<!-- Filter Form -->
+<div class="container mt-4 service-list-page">
 
-<form method="get" class="mb-3 d-flex gap-2">
-    <input type="text" name="q" value="{{ query }}" placeholder="Search services....." class="form-control" style="max-width: 300px;">
+    <h2 class="text-center mb-4">Available Services</h2>
 
-    <select name="category" class="form-select" style="max-width: 200px">
-        <option value="All" {% if category == 'All' %}selected{% endif %}>All Categories</option>
-        <option value="Tutoring" {% if category == 'Tutoring' %}selected{% endif %}>Tutoring</option>
-        <option value="Tech Help" {% if category == 'Tech Help' %}selected{% endif %}>Tech Help</option>
-        <option value="Sewing" {% if category == 'Sewing' %}selected{% endif %}>Sewing</option>
-        <option value="Gardening" {% if category == 'Gardening' %}selected{% endif %}>Gardening</option>
-        <option value="Other" {% if category == 'Other' %}selected{% endif %}>Other</option>
-    </select>
-    <button type="submit" class="btn btn-primary">Filter</button>
+    <!-- Filter Form -->
+    <form method="get" class="row justify-content-center mb-4 g-2 filter-form">
+        <div class="col-md-4">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search services..." class="form-control">
+        </div>
 
-</form>
+        <div class="col-md-3">
+            <select name="category" class="form-select">
+                <option value="All" {% if category == 'All' %}selected{% endif %}>All Categories</option>
+                <option value="Tutoring" {% if category == 'Tutoring' %}selected{% endif %}>Tutoring</option>
+                <option value="Tech Help" {% if category == 'Tech Help' %}selected{% endif %}>Tech Help</option>
+                <option value="Sewing" {% if category == 'Sewing' %}selected{% endif %}>Sewing</option>
+                <option value="Gardening" {% if category == 'Gardening' %}selected{% endif %}>Gardening</option>
+                <option value="Other" {% if category == 'Other' %}selected{% endif %}>Other</option>
+            </select>
+        </div>
 
-{% if services %}
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+        </div>
+    </form>
 
-<div class="list-group">
-    {% for service in services %}
-    <div class="list-group-item">
-        <h5>{{ service.title }}</h5>
-        <p>
-         <strong>Category:</strong> {{ service.category }} <br>
-         <strong>Rate:</strong> £{{ service.rate_per_hour }} / hour <br>
-         <strong>Posted by:</strong> {{service.provider.username }}
-        </p>
-        <a href="{% url 'book_service' service.id %}" class="btn btn-sm btn-primary mt-2">Book This service</a>
-    </div>
-    {% endfor %}
+    {% if services %}
+        <div class="row">
+            {% for service in services %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm service-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service.title }}</h5>
+                        <p class="card-text">
+                            <strong>Category:</strong> {{ service.category }} <br>
+                            <strong>Rate:</strong> £{{ service.rate_per_hour }} / hour <br>
+                            <strong>Provider:</strong> {{ service.provider.username }}
+                        </p>
+                        <a href="{% url 'book_service' service.id %}" class="btn btn-outline-primary w-100">Book This Service</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">No services are currently available.</p>
+    {% endif %}
+
 </div>
-{% else %}
-<p>No services are currently available</p>
-{% endif %}
+
 {% endblock %}
