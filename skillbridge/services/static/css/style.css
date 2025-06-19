@@ -1,3 +1,53 @@
+/* Navbar */
+.navbar .nav-link {
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    color: #d4d4d4;
+}
+
+/* Logout Button */
+.logout-form {
+    display: inline;
+}
+
+.logout-btn {
+    padding: 0;
+    color: white;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    text-decoration: underline;
+}
+
+/* Messages */
+.alert {
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.home-hero {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+    border-radius: 12px;
+}
+
+.features .feature-box {
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+    background-color: #ffffff;
+}
+
+.features .feature-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+}
+
 input:required:invalid {
   border-color: #dc3545;
 }

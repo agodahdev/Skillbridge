@@ -1,30 +1,41 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="text-center my-5">
-<h1 class="display-4">Welcome to SkillBridge</h1>
-<p class="lead">Your platform to connect, collaborate, and grow through skills.</p>
+
+<div class="home-hero text-center my-5">
+    <h1 class="display-4 fw-bold">Welcome to SkillBridge</h1>
+    <p class="lead text-muted">Your platform to connect, collaborate, and grow through skills.</p>
+
     {% if not user.is_authenticated %}
-        <a href="{% url 'signup' %}" class="btn btn-primary btn-lg mt-3">Join Now</a>
+        <a href="{% url 'signup' %}" class="btn btn-primary btn-lg mt-3 px-4">Join Now</a>
     {% else %}
-        <a href="{% url 'dashboard' %}" class="btn btn-success btn-lg mt-3">Go to Dashboard</a>
-    {% endif %}    
+        <a href="{% url 'dashboard' %}" class="btn btn-success btn-lg mt-3 px-4">Go to Dashboard</a>
+    {% endif %}
 </div>
 
-<hr>
+<hr class="my-5">
 
-<div class="row text-center">
-    <div class="col-md-4">
-        <h3>Offer a Skill</h3>
-        <p>Create and promote your service to a wide audience.</p>
+<section class="features container text-center">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="feature-box p-4 shadow-sm h-100">
+                <h3 class="text-primary">Offer a Skill</h3>
+                <p class="text-muted">Create and promote your service to a wide audience. Share your talent and help others grow.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-box p-4 shadow-sm h-100">
+                <h3 class="text-success">Find a Provider</h3>
+                <p class="text-muted">Search and connect with skilled professionals quickly. Find exactly what you need, when you need it.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-box p-4 shadow-sm h-100">
+                <h3 class="text-warning">Track & Manage</h3>
+                <p class="text-muted">Use your dashboard to manage services, bookings, and requests—all in one place.</p>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h3>Find a Provider</h3>
-        <p>Search and connect with skilled professionals easily.</p>
-    </div>
-    <div class="col-md-4">
-        <h3>Track & Manage</h3>
-        <p>Use your dashboard to view services, bookings, and requests.</p>
-    </div>
-</div>
+</section>
+
 {% endblock %}
