@@ -75,3 +75,20 @@ input:required:valid {
 .card .btn {
   padding: 10px;
 }
+
+.booking-wrapper {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-success {
+    font-weight: 600;
+}
