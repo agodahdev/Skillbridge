@@ -92,3 +92,37 @@ input:required:valid {
 .btn-success {
     font-weight: 600;
 }
+
+.submit-service-container h2 {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+form label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
+}
+
+button[type="submit"] {
+    padding: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
