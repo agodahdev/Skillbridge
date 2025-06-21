@@ -1,7 +1,8 @@
 from django import forms
 from .models import SkillService, BookingRequest
 
-#This form will allow providers to submit services
+
+# This form will allow providers to submit services
 class SkillServiceForm(forms.ModelForm):
     class Meta:
         model = SkillService

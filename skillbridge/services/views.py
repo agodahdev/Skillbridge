@@ -8,20 +8,21 @@ from django.http import HttpResponseForbidden
 from django.contrib import messages
 
 
-# This view allows a logged-in user (provider) to submit a service 
+# This view allows a logged-in user (provider) to submit a service
 @login_required
 def submit_service(request):
     if request.method == 'POST':
         form = SkillServiceForm(request.POST)
         if form.is_valid():
             service = form.save(commit=False)
-            service.provider = request.user #lset the current user as provider
-            service.is_approved = False # Admin must approve before showing
+            service.provider = request.user  # set the current user as provider
+            service.is_approved = False  # Admin must approve before showing
             service.save()
             return redirect('submission_success')
     else:
         form = SkillServiceForm()
     return render(request, 'services/submit_service.html', {'form': form})
+
 
 # Public view to Show all approved services
 def service_list(request):
@@ -34,7 +35,6 @@ def service_list(request):
 
     if category and category != 'All':
         services = services.filter(category=category)
-    
     return render(request, 'services/service_list.html', {
         'services': services,
         'query': query or '',
@@ -42,9 +42,11 @@ def service_list(request):
 
     })
 
+
 # Home page view
 def home(request):
     return render(request, 'home.html')
+
 
 @login_required
 def book_service(request, service_id):
@@ -58,27 +60,30 @@ def book_service(request, service_id):
             booking.service = service
             booking.save()
             messages.success(request, "Your booking request has been sent.")
-            return redirect('dashboard') # or a "booking success" page
+            return redirect('dashboard')  # or a "booking success" page
         else:
             print("❌ Booking form errors:", form.errors)
     else:
         form = BookingRequestForm()
-    return render(request, 'services/book_service.html', {'form': form, 'service': service})
+    return render(request, 'services/book_service.html',
+                  {'form': form, 'service': service})
+
 
 def submission_success(request):
     return render(request, 'services/submission_success.html')
+
 
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-           user = form.save()
-           login(request, user) #log in after signup
-           return redirect('/')
-    
+            user = form.save()
+            login(request, user)  # log in after signup
+        return redirect('/')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
 
 @login_required
 def dashboard(request):
@@ -92,26 +97,28 @@ def dashboard(request):
         'bookings_on_my_services': incoming_bookings,
     })
 
+
 # view to edit an existing service
 @login_required
 def edit_service(request, service_id):
     service = get_object_or_404(SkillService, id=service_id)
 
-    if service.provider != request.user: 
+    if service.provider != request.user:
         return HttpResponseForbidden("You cannot edit this service.")
 
     if request.method == 'POST':
-        
+
         form = SkillServiceForm(request.POST, instance=service)
         if form.is_valid():
-            form.save() #Save updates to the database
+            form.save()  # Save updates to the database
             messages.success(request, "Your service was updated successfully.")
-            return redirect('dashboard') # Go back to the dashboard
-    
-    else: 
+            return redirect('dashboard')  # Go back to the dashboard
+
+    else:
         form = SkillServiceForm(instance=service)
 
-    return render (request, 'services/edit_service.html', {'form': form, 'service':service})
+    return render(request, 'services/edit_service.html',
+                  {'form': form, 'service':service})
 
 
 # View to delete service
@@ -123,14 +130,15 @@ def delete_service(request, service_id):
         return HttpResponseForbidden("You cannot delete this service.")
 
     if request.method == 'POST':
-        service.delete() # Remove service from database
+        service.delete()  # Remove service from database
         messages.success(request, "Service deleted successfully.")
-        return redirect('dashboard') # Back to dashboard after deletion
+        return redirect('dashboard')  # Back to dashboard after deletion
 
-    
-    return render(request, 'services/delete_service.html', {'service': service})
+    return render(request, 'services/delete_service.html',
+                  {'service': service})
 
-@login_required    
+
+@login_required
 def manage_bookings(request):
     bookings = BookingRequest.objects.filter(service__provider=request.user)
 
@@ -145,11 +153,12 @@ def manage_bookings(request):
 
     return render(request, 'services/manage_bookings.html', {'bookings':bookings})
 
+
 @login_required
 def cancel_booking(request, pk):
     booking = get_object_or_404(BookingRequest, pk=pk)
 
-    # Only the client who made the booking or the provider of the service can cancel
+# Onkly client who made the booking or the provider of the service can cancel
     if request.user != booking.client and request.user != booking.service.provider:
         messages.error(request, "You don't have permission to cancel this booking.")
         return redirect('dashboard')

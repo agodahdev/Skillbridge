@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     submit_service, service_list, submission_success,
-    book_service, dashboard, edit_service, delete_service, manage_bookings, cancel_booking
+    book_service, dashboard, edit_service, delete_service,
+     manage_bookings, cancel_booking
 )
 from django.views.generic import TemplateView
 

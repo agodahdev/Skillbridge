@@ -29,7 +29,7 @@ import os
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "8000-agodahdev-skillbridge-lr1r6ds6grc.ws-eu120.gitpod.io",
+    "8000-agodahdev-skillbridge-suyvls6ah1z.ws-eu120.gitpod.io",
 ]
 
 
@@ -136,5 +136,5 @@ LOGIN_REDIRECT_URL = '/services/dashboard'
 LOGOUT_REDIRECT_URL = '/'
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://8000-agodahdev-skillbridge-lr1r6ds6grc.ws-eu120.gitpod.io",
+    "https://8000-agodahdev-skillbridge-suyvls6ah1z.ws-eu120.gitpod.io",
 ]
