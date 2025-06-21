@@ -59,6 +59,8 @@ def book_service(request, service_id):
             booking.save()
             messages.success(request, "Your booking request has been sent.")
             return redirect('dashboard') # or a "booking success" page
+        else:
+            print("❌ Booking form errors:", form.errors)
     else:
         form = BookingRequestForm()
     return render(request, 'services/book_service.html', {'form': form, 'service': service})
