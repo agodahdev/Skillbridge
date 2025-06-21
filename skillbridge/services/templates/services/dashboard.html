@@ -20,74 +20,102 @@
         </li>
     </ul>
 
-        <div class="tab-content mt-3">
-            <!-- Service Tab-->
-            <div class="tab-pane fade show active" id="services" role="tabpanel" aria-labelledby="services-tab">
-                {% if my_services %}
-                    <div class="row">
-                        {% for service in my_services %}
-                        <div class="col-md-6 mb-3">
-                            <div class="card shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ service.title }}</h5>
-                                    <p class="card-text"><strong>Category:</strong> {{ service.category }}</p>
-                                    <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
-                                    <a href="{% url 'delete_service' service.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                                </div>
+    <div class="tab-content mt-3">
+        <!-- My Services Tab -->
+        <div class="tab-pane fade show active" id="services" role="tabpanel" aria-labelledby="services-tab">
+            {% if my_services %}
+                <div class="row">
+                    {% for service in my_services %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ service.title }}</h5>
+                                <p class="card-text"><strong>Category:</strong> {{ service.category }}</p>
+                                <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+
+                                <!-- Delete button with modal -->
+                                <form id="delete-form-{{ service.id }}" method="POST" action="{% url 'delete_service' service.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmDeleteModal"
+                                            data-form-id="delete-form-{{ service.id }}">
+                                        Delete
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
-                {% else %}
-                    <p class="text-muted">You haven't submitted any services yet.</p>
-                {% endif %}
-            </div>
-
-            <!-- My bookings Tab-->
-             <div class="tab-pane fade" id="my-bookings" role="tabpanel" aria-labelledby="my-bookings-tab">
-                {% if my_bookings %}
-                    <ul class="list-group">
-                        {% for booking in my_bookings %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span>
-                            You booked <strong>{{ booking.service.title }}</strong> for <em>{{ booking.requested_date }}</em>
-                            </span>
-                            <form method="POST" action="{% url 'cancel_booking' booking.id %}" style="display:inline;">
-                                {% csrf_token %}
-                                <button class="btn btn-sm btn-outline-danger"
-                                onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</button>
-                            </form>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="text-muted">You haven't made any bookings yet.</p>    
-                {% endif %}    
-             </div>
-
-             <!-- Client Bookings Tab-->
-            <div class="tab-pane fade" id="client-bookings" role="tabpanel" aria-labelledby="client-bookings-tab">
-                {% if bookings_on_my_services %}
-                    <ul class="list-group">
-                        {% for booking in bookings_on_my_services %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center" >
-                            <span>
-                             <strong>{{ booking.client.username }}</strong> booked your service <strong> {{ booking.service.title }}</strong> ({{ booking.status }})   
-                            </span>
-                         {% if booking.id %}
-                         <form method="POST" action="{% url 'cancel_booking' booking.id %}" style="display:inline;">
-                            {% csrf_token %}
-                            <button class="btn btn-sm btn-outline-danger"
-                                onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</button>
-                         </form> 
-                         {% endif %}  
-                        </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="text-muted">No clients have booked your services</p>
-                {% endif %}
-            </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">You haven't submitted any services yet.</p>
+            {% endif %}
         </div>
+
+        <!-- My Bookings Tab -->
+        <div class="tab-pane fade" id="my-bookings" role="tabpanel" aria-labelledby="my-bookings-tab">
+            {% if my_bookings %}
+                <ul class="list-group">
+                    {% for booking in my_bookings %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            You booked <strong>{{ booking.service.title }}</strong> for <em>{{ booking.requested_date }}</em>
+                        </span>
+
+                        <!-- Cancel booking with modal -->
+                        <form id="cancel-form-{{ booking.id }}" method="POST" action="{% url 'cancel_booking' booking.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#confirmDeleteModal"
+                                    data-form-id="cancel-form-{{ booking.id }}">
+                                Cancel
+                            </button>
+                        </form>
+
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">You haven't made any bookings yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Client Requests Tab -->
+        <div class="tab-pane fade" id="client-bookings" role="tabpanel" aria-labelledby="client-bookings-tab">
+            {% if bookings_on_my_services %}
+                <ul class="list-group">
+                    {% for booking in bookings_on_my_services %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            <strong>{{ booking.client.username }}</strong> booked your service
+                            <strong>{{ booking.service.title }}</strong> ({{ booking.status }})
+                        </span>
+
+                        <!-- Cancel client request with modal -->
+                        <form id="cancel-form-client-{{ booking.id }}" method="POST" action="{% url 'cancel_booking' booking.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#confirmDeleteModal"
+                                    data-form-id="cancel-form-client-{{ booking.id }}">
+                                Cancel
+                            </button>
+                        </form>
+
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">No clients have booked your services.</p>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
 {% endblock %}
