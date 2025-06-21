@@ -145,9 +145,17 @@ def manage_bookings(request):
 
 @login_required
 def cancel_booking(request, pk):
-    booking = get_object_or_404(BookingRequest, pk=pk, client=request.user)
+    booking = get_object_or_404(BookingRequest, pk=pk)
+
+    # Only the client who made the booking or the provider of the service can cancel
+    if request.user != booking.client and request.user != booking.service.provider:
+        messages.error(request, "You don't have permission to cancel this booking.")
+        return redirect('dashboard')
+
     if request.method == 'POST':
         booking.delete()
-        messages.success(request, "Booking cancelled.")
+        messages.success(request, "Booking was cancelled.")
         return redirect('dashboard')
-    return HttpResponseForbidden()
+
+    messages.error(request, "Invalid request method.")
+    return redirect('dashboard')
