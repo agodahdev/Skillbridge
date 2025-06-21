@@ -127,3 +127,11 @@ These issues were fixed with careful testing and debugging during development.
 - **W3C HTML Validator**:  
   - Shows template errors due to Django `{% %}` syntax  
   - Rendered HTML (using browser "View Source") is valid and passes W3C checks  
+
+### Credits:
+
+- Code institute Python Essentials Template
+- Code institute deployment terminal
+- PEP8 Style Guide for Python Code:
+
+Tutorial link: PEP 8 Style Guide: https://peps.python.org/pep-0008/
