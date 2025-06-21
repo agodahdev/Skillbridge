@@ -1,31 +1,41 @@
-/* Navbar */
+/* Navbar Links */
 .navbar .nav-link {
     color: #fff;
     transition: color 0.3s ease;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    line-height: 1.5;
 }
 
+/* Hover effect */
 .navbar .nav-link:hover {
     color: #d4d4d4;
 }
 
-/* Logout Button */
+/* Logout Form */
 .logout-form {
-    display: inline;
-}
-
-.logout-btn {
+    margin: 0;
     padding: 0;
-    color: white;
-    border: none;
-    background: none;
-    cursor: pointer;
 }
 
+/* Logout Button */
+.logout-btn {
+    all: unset;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+    padding: 0.5rem 1rem;
+    line-height: 1.5;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+/* Hover */
 .logout-btn:hover {
+    color: #d4d4d4;
     text-decoration: underline;
 }
 
-/* Messages */
 .alert {
     border-radius: 5px;
     margin-bottom: 20px;

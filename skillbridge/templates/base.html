@@ -32,9 +32,9 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'submit_service' %}">Submit Service</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
                         <li class="nav-item">
-                            <form method="POST" action="{% url 'logout' %}" class="logout-form">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-link nav-link logout-btn">Logout</button>
+                            <form method="POST" action="{% url 'logout' %}" class="logout-form d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link logout-btn">Logout</button>
                             </form>
                         </li>
                     {% else %}
