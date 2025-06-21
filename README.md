@@ -13,18 +13,18 @@ Admins approve submitted services before they go public.
 
 ## Features
 
-✅ Custom Model: `SkillService` and `BookingRequest`  
-✅ Service submission form (CRUD for providers)  
-✅ Booking request form (CRUD for users)  
-✅ Frontend delete/edit buttons for user records  
-✅ Admin approval system  
-✅ Filter services by title and category  
-✅ Responsive design (mobile, tablet, desktop)  
-✅ User registration, login, logout  
-✅ Custom 404 page  
-✅ Testing with Django + validation tools
+Custom Model: `SkillService` and `BookingRequest`  
+Service submission form (CRUD for providers)  
+Booking request form (CRUD for users)  
+Frontend delete/edit buttons for user records  
+Admin approval system  
+Filter services by title and category  
+Responsive design (mobile, tablet, desktop)  
+User registration, login, logout  
+Custom 404 page  
+Testing with Django + validation tools
 
-## 🧭 How to Use the Website
+## How to Use the Website
 
 ### For New Users:
 1. Click on **"Sign Up"** to create a new account.
@@ -122,8 +122,8 @@ These issues were fixed with careful testing and debugging during development.
 
 🧹 Validation Tools
 
-- ✅ **W3C CSS Validator**: No errors found  
-- ✅ **JSHint**: JavaScript passes with no major issues  
-- ⚠️ **W3C HTML Validator**:  
+- **W3C CSS Validator**: No errors found  
+- **JSHint**: JavaScript passes with no major issues  
+- **W3C HTML Validator**:  
   - Shows template errors due to Django `{% %}` syntax  
   - Rendered HTML (using browser "View Source") is valid and passes W3C checks  
