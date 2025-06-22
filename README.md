@@ -114,7 +114,7 @@ Throughout the project, we encountered some issues and fixed them. Here are some
   - Validator showed errors due to Django template syntax (`{% %}`), which is not valid HTML.  
   - *Fix:* Confirmed that the final rendered HTML (using “View Page Source”) is valid and passes W3C checks.
 
--  **Responsive layout not working well on all devices**  
+- **Responsive layout not working well on all devices**  
   - Some sections didn’t look right on mobile or tablets.  
   - *Fix:* Added media queries to adjust layout for different screen sizes.
 
@@ -127,6 +127,23 @@ These issues were fixed with careful testing and debugging during development.
 - **W3C HTML Validator**:  
   - Shows template errors due to Django `{% %}` syntax  
   - Rendered HTML (using browser "View Source") is valid and passes W3C checks  
+
+
+### Deployment:
+
+- This project was deployed using github and Heroku:
+- Fork or clone this repo
+- Create a new Heroku app
+- Set buildingpacks to Python
+- Link the Heroku app to Github, searching repo
+- Deploy Branch
+- live link is here: https://skillbridgeapp-815e04f8d2e3.herokuapp.com/
+
+- Github deployment:
+- Go to the Settings tab in your GitHub repo.
+- In the Source drop-down menu, select the main branch.
+- Save the changes under Branch settings.
+- Return to the Code tab, and under Deployments on the right, you will see the live page.
 
 ### Credits:
 
