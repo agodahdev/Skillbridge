@@ -29,7 +29,7 @@ import os
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "8000-agodahdev-skillbridge-suyvls6ah1z.ws-eu120.gitpod.io",
+    "https://skillbridge-fce10835b70a.herokuapp.com",
 ]
 
 
@@ -138,5 +138,6 @@ LOGIN_REDIRECT_URL = '/services/dashboard'
 LOGOUT_REDIRECT_URL = '/'
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://8000-agodahdev-skillbridge-suyvls6ah1z.ws-eu120.gitpod.io",
+    "https://",
+    "https://skillbridge-fce10835b70a.herokuapp.com"
 ]
