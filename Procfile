@@ -1,1 +1,1 @@
-web: gunicorn skillbridge_project.wsgi
+web: gunicorn skillbridge.skillbridge_project.wsgi
