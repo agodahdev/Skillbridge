@@ -16,13 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from services.views import home
+from skillbridge.services.views import home
 
 urlpatterns = [
     path('', home, name='home'),
     path('admin/', admin.site.urls),
-    path('services/', include('services.urls')),
+    path('services/', include('skillbridge.services.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('skillbridge.accounts.urls')),
    
 ]
