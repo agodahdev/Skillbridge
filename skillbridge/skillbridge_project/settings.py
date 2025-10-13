@@ -29,7 +29,8 @@ import os
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "https://skillbridge-fce10835b70a.herokuapp.com",
+    "skillbridge-ba237edbd42e.herokuapp.com",
+    ".herokuapp.com"
 ]
 
 
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'skillbridge_project.urls'
+ROOT_URLCONF = 'skillbridge.skillbridge_project.urls'
 
 TEMPLATES = [
     {
