@@ -5,7 +5,7 @@ from .models import SkillService, BookingRequest
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseForbidden
-from django.contrib import messages
+from django.contrib import messages 
 
 
 # This view allows a logged-in user (provider) to submit a service

@@ -16,5 +16,5 @@ urlpatterns = [
     path('delete/<int:service_id>/', delete_service, name='delete_service'),
     path('manage_bookings/', manage_bookings, name='manage_bookings'),
     path('booking/<int:pk>/cancel', cancel_booking, name='cancel_booking'),
-
+    
 ]

@@ -38,5 +38,3 @@ class BookingRequest(models.Model):
 
     def __str__(self):
         return f"{self.client.username} -> {self.service.title}"
-
-    
