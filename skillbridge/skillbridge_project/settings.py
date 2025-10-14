@@ -139,3 +139,11 @@ CSRF_TRUSTED_ORIGINS = [
     "https://",
     "https://skillbridge-fce10835b70a.herokuapp.com"
 ]
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
