@@ -1,3 +1,6 @@
+.env
+*.env
+db.sqlite3
 core.Microsoft*
 core.mongo*
 core.python*
