@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'skillbridge_project.urls'
+ROOT_URLCONF = 'skillbridge.skillbridge_project.urls'
 
 TEMPLATES = [
     {
