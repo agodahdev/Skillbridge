@@ -85,18 +85,48 @@
             {% endif %}
         </div>
 
-        <!-- Client Requests Tab -->
-        <div class="tab-pane fade" id="client-bookings" role="tabpanel" aria-labelledby="client-bookings-tab">
-            {% if bookings_on_my_services %}
-                <ul class="list-group">
-                    {% for booking in bookings_on_my_services %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>
-                            <strong>{{ booking.client.username }}</strong> booked your service
-                            <strong>{{ booking.service.title }}</strong> ({{ booking.status }})
-                        </span>
+   <!-- Client Requests Tab -->
+  <div class="tab-pane fade" id="client-bookings" role="tabpanel" aria-labelledby="client-bookings-tab">
+     {% if bookings_on_my_services %}
+        <ul class="list-group">
+            {% for booking in bookings_on_my_services %}
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>
+                        <strong>{{ booking.client.username }}</strong> booked <strong>{{ booking.service.title }}</strong>
+                        <br>
+                        <small class="text-muted">Date: {{ booking.requested_date }} | Message: {{ booking.messages }}</small>
+                    </span>
+                    <span class="badge 
+                        {% if booking.status == 'pending' %}bg-warning
+                        {% elif booking.status == 'accepted' %}bg-success
+                        {% else %}bg-danger{% endif %}">
+                        {{ booking.status|title }}
+                    </span>
+                </div>
 
-                        <!-- Cancel client request with modal -->
+                <!-- Action buttons -->
+                <div class="btn-group" role="group">
+                    {% if booking.status == 'pending' %}
+                        <!-- Accept button -->
+                        <form method="POST" action="{% url 'update_booking_status' booking.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="accepted">
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <i class="bi bi-check-circle"></i> Accept
+                            </button>
+                        </form>
+
+                        <!-- Reject button -->
+                        <form method="POST" action="{% url 'update_booking_status' booking.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="rejected">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-x-circle"></i> Reject
+                            </button>
+                        </form>
+                    {% else %}
+                        <!-- Cancel booking (for accepted/rejected) -->
                         <form id="cancel-form-client-{{ booking.id }}" method="POST" action="{% url 'cancel_booking' booking.id %}" class="d-inline">
                             {% csrf_token %}
                             <button type="button"
@@ -104,22 +134,22 @@
                                     data-bs-toggle="modal"
                                     data-bs-target="#confirmDeleteModal"
                                     data-form-id="cancel-form-client-{{ booking.id }}">
-                                Cancel
+                                <i class="bi bi-trash"></i> Remove
                             </button>
                         </form>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">No clients have booked your services.</p>
+    {% endif %}
+ </div>
 
-                    </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p class="text-muted">No clients have booked your services.</p>
-            {% endif %}
-        </div>
-    </div>
-</div>
 
-<!-- Confirmation Modal -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -135,7 +165,7 @@
             </div>
         </div>
     </div>
-</div>
+  </div>
 
 <!-- JavaScript to handle form submission -->
 <script>

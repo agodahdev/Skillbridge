@@ -204,3 +204,33 @@ def cancel_booking(request, pk):
 
     messages.error(request, "Invalid request method.")
     return redirect('dashboard')
+
+@login_required
+def update_booking_status(request, pk):
+    """
+    Allow providers to accept or reject booking requests.
+    Only the service provider can update the status.
+    """
+    booking = get_object_or_404(BookingRequest, pk=pk)
+    
+    # Only the provider of the service can update status
+    if request.user != booking.service.provider:
+        messages.error(request, "You don't have permission to update this booking.")
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        
+        # Validate status
+        if new_status in ['accepted', 'rejected']:
+            booking.status = new_status
+            booking.save()
+            
+            if new_status == 'accepted':
+                messages.success(request, f"You accepted {booking.client.username}'s booking for {booking.service.title}.")
+            else:
+                messages.info(request, f"You rejected {booking.client.username}'s booking for {booking.service.title}.")
+        else:
+            messages.error(request, "Invalid status.")
+    
+    return redirect('dashboard')

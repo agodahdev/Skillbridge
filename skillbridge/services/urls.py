@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     submit_service, service_list, submission_success,
     book_service, dashboard, edit_service, delete_service,
-     manage_bookings, cancel_booking
+     manage_bookings, cancel_booking, update_booking_status
 )
 from django.views.generic import TemplateView
 
@@ -16,5 +16,6 @@ urlpatterns = [
     path('delete/<int:service_id>/', delete_service, name='delete_service'),
     path('manage_bookings/', manage_bookings, name='manage_bookings'),
     path('booking/<int:pk>/cancel', cancel_booking, name='cancel_booking'),
+    path('booking/update/<int:pk>/', update_booking_status, name='update_booking_status'),
     
 ]
