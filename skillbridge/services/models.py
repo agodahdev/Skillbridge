@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 
 
 class SkillService(models.Model):
+    """
+    A service that providers can offer.
+    Needs admin approval before showing publicly.
+    """
     CATEGORY_CHOICES = [
         ('Tutoring', 'Tutoring'),
         ('Tech Help', 'Tech Help'),
@@ -25,6 +29,10 @@ class SkillService(models.Model):
 
 
 class BookingRequest(models.Model):
+    """
+    A request from a client to book a service.
+    Starts as 'pending' until provider accepts/rejects.
+    """
     service = models.ForeignKey('SkillService', on_delete=models.CASCADE)
     client = models.ForeignKey(User, on_delete=models.CASCADE)
     messages = models.TextField()

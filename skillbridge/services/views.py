@@ -45,11 +45,16 @@ def service_list(request):
 
 # Home page view
 def home(request):
+    """Show the homepage."""
     return render(request, 'home.html')
 
 
 @login_required
 def book_service(request, service_id):
+    """
+    Let logged-in users book a service.
+    Gets the service by ID and creates a booking if form is valid.
+    """
     service = get_object_or_404(SkillService, id=service_id, is_approved=True)
 
     if request.method == 'POST':
@@ -70,10 +75,15 @@ def book_service(request, service_id):
 
 
 def submission_success(request):
+        """Show success page after submitting a service."""
     return render(request, 'services/submission_success.html')
 
 
 def signup(request):
+    """
+    Handle new user registration.
+    Creates account and logs them in automatically.
+    """
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -87,6 +97,13 @@ def signup(request):
 
 @login_required
 def dashboard(request):
+    """
+    Show user's dashboard with three tabs:
+    - My Services (services I created)
+    - My Bookings (services I booked)
+    - Client Requests (bookings on my services)
+    """
+
     my_services = SkillService.objects.filter(provider=request.user)
     my_client_bookings = BookingRequest.objects.filter(client=request.user)
     incoming_bookings = BookingRequest.objects.filter(service__provider=request.user)
@@ -101,12 +118,17 @@ def dashboard(request):
 # view to edit an existing service
 @login_required
 def edit_service(request, service_id):
-    service = get_object_or_404(SkillService, id=service_id)
+     """
+    Let users edit their own services.
+    Shows error if they try to edit someone else's service.
+    """
+     service = get_object_or_404(SkillService, id=service_id)
 
-    if service.provider != request.user:
+     # Check if user owns this service
+     if service.provider != request.user:
         return HttpResponseForbidden("You cannot edit this service.")
 
-    if request.method == 'POST':
+     if request.method == 'POST':
 
         form = SkillServiceForm(request.POST, instance=service)
         if form.is_valid():
@@ -114,32 +136,41 @@ def edit_service(request, service_id):
             messages.success(request, "Your service was updated successfully.")
             return redirect('dashboard')  # Go back to the dashboard
 
-    else:
+     else:
         form = SkillServiceForm(instance=service)
 
-    return render(request, 'services/edit_service.html',
+     return render(request, 'services/edit_service.html',
                   {'form': form, 'service':service})
 
 
 # View to delete service
 @login_required
 def delete_service(request, service_id):
-    service = get_object_or_404(SkillService, id=service_id)
+     """
+     Let users delete their own services.
+     Only works if you're the owner of the service.
+     """
+     service = get_object_or_404(SkillService, id=service_id)
 
-    if service.provider != request.user:
+    # Check if user owns this service
+     if service.provider != request.user:
         return HttpResponseForbidden("You cannot delete this service.")
 
-    if request.method == 'POST':
+     if request.method == 'POST':
         service.delete()  # Remove service from database
         messages.success(request, "Service deleted successfully.")
         return redirect('dashboard')  # Back to dashboard after deletion
 
-    return render(request, 'services/delete_service.html',
+     return render(request, 'services/delete_service.html',
                   {'service': service})
 
 
 @login_required
 def manage_bookings(request):
+    """
+    Show providers all bookings on their services.
+    They can update the status (pending/accepted/rejected).
+    """
     bookings = BookingRequest.objects.filter(service__provider=request.user)
 
     if request.method == 'POST':
@@ -156,6 +187,10 @@ def manage_bookings(request):
 
 @login_required
 def cancel_booking(request, pk):
+    """
+    Cancel a booking.
+    Either the client or the provider can cancel.
+    """
     booking = get_object_or_404(BookingRequest, pk=pk)
 
 # Onkly client who made the booking or the provider of the service can cancel
