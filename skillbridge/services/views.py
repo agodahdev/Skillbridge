@@ -124,7 +124,7 @@ def edit_service(request, service_id):
     """
     service = get_object_or_404(SkillService, id=service_id)
 
-     # Check if user owns this service
+    # Check if user owns this service
     if service.provider != request.user:
         return HttpResponseForbidden("You cannot edit this service.")
 
@@ -145,28 +145,24 @@ def edit_service(request, service_id):
 
 # View to delete service
 @login_required
-def edit_service(request, service_id):
+def delete_service(request, service_id): 
     """
-    Let users edit their own services.
-    Shows error if they try to edit someone else's service.
+    Let users delete their own services.
+    Only works if you're the owner of the service.
     """
     service = get_object_or_404(SkillService, id=service_id)
 
     # Check if user owns this service
     if service.provider != request.user:
-        return HttpResponseForbidden("You cannot edit this service.")
+        return HttpResponseForbidden("You cannot delete this service.")
 
     if request.method == 'POST':
-        form = SkillServiceForm(request.POST, instance=service)
-        if form.is_valid():
-            form.save()  # Save updates to the database
-            messages.success(request, "Your service was updated successfully.")
-            return redirect('dashboard')  # Go back to the dashboard
-    else:
-        form = SkillServiceForm(instance=service)
+        service.delete() 
+        messages.success(request, "Service deleted successfully.") 
+        return redirect('dashboard')
 
-    return render(request, 'services/edit_service.html',
-                  {'form': form, 'service': service})
+    return render(request, 'services/delete_service.html',  
+                  {'service': service})
 
 @login_required
 def manage_bookings(request):
