@@ -19,13 +19,19 @@ class BookingRequestForm(forms.ModelForm):
         widgets = {
             'requested_date': forms.DateInput(
                 attrs={
-                    'type': 'date',
-                    'class': 'form-control'
-                }
-            ),
-            'messages': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': 'Write a short message for the provider'
-            })
+                    'type': 'date',}), 
+    
 
-        }
+    def clean_requested_date(self):
+         """
+        Validate that the booking date is not in the past.
+        Prevents users from booking services for dates that already happened.
+        """
+        requested_date = self.cleaned_data.get('requested_date')
+
+        # Check if date is in the past
+        if requested_date and requested_date < date.today():
+           raise ValidationError("You cannot book a service for a date in the past.
+                                 "Please select today or a future date.")
+
+        return requested_date
