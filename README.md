@@ -82,6 +82,94 @@
   - Git & GitHub  
 
 
+
+### Model Relationships
+
+**User → SkillService (One-to-Many)**
+- One user (provider) can create multiple services
+- Field: `SkillService.provider` (ForeignKey to User)
+- Delete behavior: CASCADE (if user deleted, their services are deleted)
+
+**User → BookingRequest (One-to-Many)**
+- One user (client) can make multiple booking requests
+- Field: `BookingRequest.client` (ForeignKey to User)
+- Delete behavior: CASCADE (if user deleted, their bookings are deleted)
+
+**SkillService → BookingRequest (One-to-Many)**
+- One service can have multiple booking requests
+- Field: `BookingRequest.service` (ForeignKey to SkillService)
+- Delete behavior: CASCADE (if service deleted, bookings are deleted)
+
+### Model Details
+
+#### SkillService Model
+**Purpose:** Stores service offerings from providers
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | Primary Key | Auto-generated unique identifier |
+| `title` | CharField(100) | Service name/title |
+| `description` | TextField | Detailed service description |
+| `category` | CharField(50) | Service category (choices from predefined list) |
+| `rate_per_hour` | DecimalField(6,2) | Price per hour |
+| `provider` | ForeignKey(User) | User who created the service |
+| `is_approved` | BooleanField | Admin approval status (default: False) |
+| `created_at` | DateTimeField | Timestamp of creation (auto_now_add) |
+
+**Business Rules:**
+- Services are hidden from public until `is_approved=True`
+- Only the provider can edit/delete their services
+- Admin can approve/reject via Django admin panel
+
+---
+
+#### BookingRequest Model
+**Purpose:** Stores client booking requests for services
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | Primary Key | Auto-generated unique identifier |
+| `service` | ForeignKey(SkillService) | The service being booked |
+| `client` | ForeignKey(User) | User making the booking |
+| `requested_date` | DateField | Requested service date |
+| `messages` | TextField | Message/details from client |
+| `status` | CharField(10) | Booking status (default: 'Pending') |
+| `created_at` | DateTimeField | Timestamp of booking creation (auto_now_add) |
+
+**Business Rules:**
+- Clients must be authenticated to create bookings
+- Status defaults to "Pending"
+- Both client and provider can cancel bookings
+- Bookings appear in provider's dashboard
+
+---
+
+### Category Choices
+Services can be categorized into:
+- **Tutoring:** Educational services
+- **Tech Help:** Technical assistance and IT support
+- **Sewing:** Clothing alterations and repairs
+- **Gardening:** Garden maintenance and landscaping
+- **Other:** Any other service type
+
+---
+
+### Status Choices
+Booking requests can have these statuses:
+- **pending:** Awaiting provider response (default)
+- **accepted:** Provider has accepted the booking
+- **rejected:** Provider has declined the booking
+
+---
+
+### Data Integrity
+- All foreign keys use `on_delete=CASCADE` to maintain referential integrity
+- User deletion cascades to their services and bookings
+- Service deletion cascades to associated bookings
+- Database constraints ensure required fields are populated
+- `auto_now_add=True` automatically sets timestamps on creation
+
+
   ## Agile Process
 
   - GitHub Projects board used to manage tasks and user stories  
