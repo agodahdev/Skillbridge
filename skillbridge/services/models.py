@@ -41,7 +41,7 @@ class BookingRequest(models.Model):
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),
         ('rejected', 'Rejected'),
-    ], default='Pending')
+    ], default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
