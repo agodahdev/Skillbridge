@@ -2,17 +2,7 @@
 {% block content %}
 
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">My Dashboard</h2>
-        <div class="text-end">
-            <p class="mb-0 text-muted small">Welcome back,</p>
-            <h5 class="mb-0 text-primary fw-bold">{{ user.username }}</h5>
-        </div>
-    </div>
-
-    <!-- Nav tabs-->
-    <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
-
+    <h2 class="mb-4 text-center">My Dashboard</h2>
 
    <!-- Nav tabs-->
     <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
@@ -30,59 +20,41 @@
         </li>
     </ul>
 
-   <div class="tab-content mt-3">
-   <!-- My Services Tab -->
-   <div class="tab-pane fade show active" id="services" role="tabpanel" aria-labelledby="services-tab">
-    {% if my_services %}
-        <div class="row">
-            {% for service in my_services %}
-            <div class="col-12 mb-3">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="card-title mb-1">{{ service.title }}</h5>
-                                <span class="badge 
-                                    {% if service.is_approved %}bg-success
-                                    {% else %}bg-warning{% endif %}">
-                                    {% if service.is_approved %}Approved{% else %}Pending Approval{% endif %}
-                                </span>
-                            </div>
-                            <h4 class="text-primary mb-0">${{ service.rate_per_hour }}/hr</h4>
-                        </div>
-                        
-                        <p class="card-text text-muted mb-2">
-                            <strong>Category:</strong> {{ service.category }}
-                        </p>
-                        
-                        <p class="card-text">{{ service.description|truncatewords:20 }}</p>
-                        
-                        <div class="d-flex gap-2 mt-3">
-                            <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-primary">
-                                <i class="bi bi-pencil"></i> Edit
-                            </a>
+    <div class="tab-content mt-3">
+        <!-- My Services Tab -->
+        <div class="tab-pane fade show active" id="services" role="tabpanel" aria-labelledby="services-tab">
+            {% if my_services %}
+                <div class="row">
+                    {% for service in my_services %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ service.title }}</h5>
+                                <p class="card-text"><strong>Category:</strong> {{ service.category }}</p>
+                                <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
 
-                            <!-- Delete button with modal -->
-                            <form id="delete-form-{{ service.id }}" method="POST" action="{% url 'delete_service' service.id %}" class="d-inline">
-                                {% csrf_token %}
-                                <button type="button"
-                                        class="btn btn-sm btn-danger"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#confirmDeleteModal"
-                                        data-form-id="delete-form-{{ service.id }}">
-                                    <i class="bi bi-trash"></i> Delete
-                                </button>
-                            </form>
+                                <!-- Delete button with modal -->
+                                <form id="delete-form-{{ service.id }}" method="POST" action="{% url 'delete_service' service.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmDeleteModal"
+                                            data-form-id="delete-form-{{ service.id }}">
+                                        Delete
+                                    </button>
+                                </form>
+
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-            </div>
-            {% endfor %}
+            {% else %}
+                <p class="text-muted">You haven't submitted any services yet.</p>
+            {% endif %}
         </div>
-      {% else %}
-       <p class="text-muted">You haven't submitted any services yet.</p>
-       {% endif %}
-     </div>
+
         <!-- My Bookings Tab -->
         <div class="tab-pane fade" id="my-bookings" role="tabpanel" aria-labelledby="my-bookings-tab">
             {% if my_bookings %}
@@ -113,71 +85,72 @@
             {% endif %}
         </div>
 
-   <!-- Client Requests Tab -->
-  <div class="tab-pane fade" id="client-bookings" role="tabpanel" aria-labelledby="client-bookings-tab">
-    {% if bookings_on_my_services %}
-        <ul class="list-group">
-            {% for booking in bookings_on_my_services %}
-            <li class="list-group-item">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span>
-                        <strong>{{ booking.client.username }}</strong> booked <strong>{{ booking.service.title }}</strong>
-                        <br>
-                        <small class="text-muted">Date: {{ booking.requested_date }} | Message: {{ booking.messages }}</small>
-                    </span>
-                    <span class="badge 
-                        {% if booking.status == 'pending' or booking.status == 'Pending' %}bg-warning
-                        {% elif booking.status == 'accepted' or booking.status == 'Accepted' %}bg-success
-                        {% else %}bg-danger{% endif %}">
-                        {{ booking.status|title }}
-                    </span>
-                </div>
+        <!-- Client Requests Tab -->
+        <div class="tab-pane fade" id="client-bookings" role="tabpanel" aria-labelledby="client-bookings-tab">
+            {% if bookings_on_my_services %}
+                <ul class="list-group">
+                    {% for booking in bookings_on_my_services %}
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>
+                                <strong>{{ booking.client.username }}</strong> booked <strong>{{ booking.service.title }}</strong>
+                                <br>
+                                <small class="text-muted">Date: {{ booking.requested_date }} | Message: {{ booking.messages }}</small>
+                            </span>
+                            <span class="badge 
+                                {% if booking.status == 'pending' or booking.status == 'Pending' %}bg-warning
+                                {% elif booking.status == 'accepted' or booking.status == 'Accepted' %}bg-success
+                                {% else %}bg-danger{% endif %}">
+                                {{ booking.status|title }}
+                            </span>
+                        </div>
 
-                <!-- Action buttons -->
-                <div class="btn-group" role="group">
-                    {% if booking.status == 'pending' or booking.status == 'Pending' %}
-                        <!-- Accept button -->
-                        <form method="POST" action="{% url 'update_booking_status' booking.id %}" class="d-inline">
-                            {% csrf_token %}
-                            <input type="hidden" name="status" value="accepted">
-                            <button type="submit" class="btn btn-sm btn-success">
-                                Accept
-                            </button>
-                        </form>
+                        <!-- Action buttons -->
+                        <div class="btn-group" role="group">
+                            {% if booking.status == 'pending' or booking.status == 'Pending' %}
+                                <!-- Accept button -->
+                                <form method="POST" action="{% url 'update_booking_status' booking.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="status" value="accepted">
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        Accept
+                                    </button>
+                                </form>
 
-                        <!-- Reject button -->
-                        <form method="POST" action="{% url 'update_booking_status' booking.id %}" class="d-inline">
-                            {% csrf_token %}
-                            <input type="hidden" name="status" value="rejected">
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                Reject
-                            </button>
-                        </form>
-                    {% else %}
-                        <!-- Cancel booking (for accepted/rejected) -->
-                        <form id="cancel-form-client-{{ booking.id }}" method="POST" action="{% url 'cancel_booking' booking.id %}" class="d-inline">
-                            {% csrf_token %}
-                            <button type="button"
-                                    class="btn btn-sm btn-outline-danger"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#confirmDeleteModal"
-                                    data-form-id="cancel-form-client-{{ booking.id }}">
-                                Remove
-                            </button>
-                        </form>
-                    {% endif %}
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p class="text-muted">No clients have booked your services.</p>
-    {% endif %}
-  </div> 
+                                <!-- Reject button -->
+                                <form method="POST" action="{% url 'update_booking_status' booking.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="status" value="rejected">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        Reject
+                                    </button>
+                                </form>
+                            {% else %}
+                                <!-- Cancel booking (for accepted/rejected) -->
+                                <form id="cancel-form-client-{{ booking.id }}" method="POST" action="{% url 'cancel_booking' booking.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmDeleteModal"
+                                            data-form-id="cancel-form-client-{{ booking.id }}">
+                                        Remove
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">No clients have booked your services.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
-
-  <!-- Confirmation Modal -->
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -193,7 +166,7 @@
             </div>
         </div>
     </div>
-  </div>
+</div>
 
 <!-- JavaScript to handle form submission -->
 <script>
@@ -216,4 +189,3 @@
 </script>
 
 {% endblock %}
-
