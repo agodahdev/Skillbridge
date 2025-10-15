@@ -8,11 +8,29 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ---
 
+## MoSCoW Prioritization
+
+Stories are prioritized using the MoSCoW method:
+- **Must Have:** Critical features required for MVP
+- **Should Have:** Important features that add significant value
+- **Could Have:** Nice-to-have features if time permits
+- **Won't Have:** Features for future releases
+
+### Story Points Breakdown
+- **Must Have:** 6 stories (60%)
+- **Should Have:** 3 stories (30%)
+- **Could Have:** 1 story (10%)
+- **Won't Have:** 0 stories (future roadmap)
+
+**Total Should-Have: 30% (Well under 60% requirement ✅)**
+
+
 ## User Stories by Role
 
 ### Client User Stories
 
-#### User Story #1: Register & Login
+
+#### User Story #1: Register & Login 🔴 MUST HAVE
 **As a** Client  
 **I want to** register and log in/out  
 **So that I can** securely use the application
@@ -32,7 +50,7 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ---
 
-#### User Story #2: View Available Services
+#### User Story #2: View Available Services 🔴 MUST HAVE
 **As a** Client  
 **I want to** see a list of approved services  
 **So that I can** choose which one to book
@@ -53,7 +71,8 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ---
 
-#### User Story #3: Book a Service
+
+#### User Story #3: Book a Service 🟡 SHOULD HAVE
 **As a** Client  
 **I want to** book a listed service  
 **So that I can** request help from a provider
@@ -76,7 +95,7 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ### Service Provider User Stories
 
-#### User Story #4: Post New Service
+#### User Story #4: Post New Service 🔴 MUST HAVE
 **As a** Provider  
 **I want to** create a new service listing  
 **So that** clients can find and book me
@@ -100,7 +119,7 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ---
 
-#### User Story #5: Edit/Delete My Service
+#### User Story #5: Edit/Delete My Service 🟡 SHOULD HAVE
 **As a** Provider  
 **I want to** edit or delete my services  
 **So that I can** manage my offerings easily
@@ -120,7 +139,7 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ---
 
-#### User Story #6: View My Bookings
+#### User Story #6: View My Bookings 🟡 SHOULD HAVE
 **As a** Provider  
 **I want to** view client booking requests  
 **So that I can** manage my schedule and respond
@@ -142,7 +161,7 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ### Admin User Stories
 
-#### User Story #7: Approve or Reject Services
+#### User Story #7: Approve or Reject Services 🔴 MUST HAVE
 **As an** Admin  
 **I want to** approve or reject service listings  
 **So that** only quality services are available to clients
@@ -164,7 +183,7 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ### Developer User Stories
 
-#### User Story #8: Frontend CRUD (No Admin Panel)
+#### User Story #8: Frontend CRUD (No Admin Panel) 🟢 COULD HAVE
 **As a** user  
 **I want to** manage all my data from UI  
 **So that I don't** have to use Django admin panel
@@ -184,7 +203,7 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ---
 
-#### User Story #9: Production-Ready Setup
+#### User Story #9: Production-Ready Setup 🔴 MUST HAVE
 **As a** Developer  
 **I want to** ensure the application is secure and production-ready  
 **So that** it can be deployed safely
@@ -205,7 +224,7 @@ This project was developed using Agile methodology with user stories tracked in 
 
 ---
 
-#### User Story #10: Setup Project Infrastructure
+#### User Story #10: Setup Project Infrastructure 🔴 MUST HAVE
 **As a** Developer  
 **I want to** set up the Django project and environment correctly  
 **So that** the foundation is ready for future development
