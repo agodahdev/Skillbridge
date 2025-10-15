@@ -24,6 +24,8 @@
   Custom 404 page  
   Testing with Django + validation tools
 
+
+
   ## How to Use the Website
 
   ### For New Users:
@@ -63,14 +65,14 @@
   - Git & GitHub  
 
 
-  ## 📅 Agile Process
+  ## Agile Process
 
   - GitHub Projects board used to manage tasks and user stories  
   - Clear milestones and labels applied  
   - User stories written from user perspective (e.g. "As a provider, I want to...")  
   - All commits follow small, meaningful messages.
 
-  ### 🔧 Manual Testing
+  ### Manual Testing
 
   We tested the following features manually to ensure they work as expected:
 
@@ -82,7 +84,6 @@
   - Admin approval system for submitted services  
   - Custom 404 page display  
   - Responsive layout on mobile, tablet, and desktop devices  
-
   ### Automated Testing
 
   We used Django's `TestCase` to verify key functionality:
@@ -120,13 +121,52 @@
 
   These issues were fixed with careful testing and debugging during development.
 
-  🧹 Validation Tools
+ ## Validation Tools
 
   - **W3C CSS Validator**: No errors found  
   - **JSHint**: JavaScript passes with no major issues  
   - **W3C HTML Validator**:  
     - Shows template errors due to Django `{% %}` syntax  
     - Rendered HTML (using browser "View Source") is valid and passes W3C checks  
+
+  
+ ## Security & Configuration
+
+ ### Environment Variables
+
+ This project uses environment variables to keep sensitive information secure. All secrets are stored outside the codebase.
+
+ **Required environment variables:**
+ - `SECRET_KEY` - Django secret key for cryptographic signing
+ - `DEBUG` - Debug mode (True for development, False for production)
+ - `ALLOWED_HOSTS` - Comma-separated list of allowed host/domain names
+
+ ### Local Development Setup
+
+ 1. Create a `.env` file in the project root:
+ SECRET_KEY=your-secret-key-here
+ DEBUG=True
+ ALLOWED_HOSTS=localhost,127.0.0.1
+
+
+ 2. Never commit the `.env` file to Git (it's protected by `.gitignore`)
+
+ ### Production Deployment (Heroku)
+
+ Environment variables are set using Heroku config vars:
+ heroku config:set SECRET_KEY='your-secret-key'
+ heroku config:set DEBUG=False
+ heroku config:set ALLOWED_HOSTS='your-app.herokuapp.com'
+
+
+ ### Security Features
+
+ - **Environment-based configuration:** Secrets are never hardcoded in source code
+ - **DEBUG mode disabled in production:** Prevents sensitive information leakage
+ - **CSRF protection:** All forms use Django's CSRF tokens
+ - **Authentication required:** Service submission and bookings require login
+ - **User permissions:** Users can only edit/delete their own content
+ - **Admin approval:** Services require admin approval before going public
 
 
   ### Deployment:
@@ -137,7 +177,7 @@
   - Set buildingpacks to Python
   - Link the Heroku app to Github, searching repo
   - Deploy Branch
-  - live link is here: https://skillbridgeapp-815e04f8d2e3.herokuapp.com/
+  - live link is here: https://skillbridge-ba237edbd42e.herokuapp.com/
 
   - Github deployment:
   - Go to the Settings tab in your GitHub repo.
