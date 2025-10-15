@@ -264,17 +264,108 @@ Booking requests can have these statuses:
  heroku config:set ALLOWED_HOSTS='your-app.herokuapp.com'
 
 
- ### Security Features
+ ## 🔐 Security Features & Rationale
 
- - **Environment-based configuration:** Secrets are never hardcoded in source code
- - **DEBUG mode disabled in production:** Prevents sensitive information leakage
- - **CSRF protection:** All forms use Django's CSRF tokens
- - **Authentication required:** Service submission and bookings require login
- - **User permissions:** Users can only edit/delete their own content
- - **Admin approval:** Services require admin approval before going public
+### Environment Variables
+**What:** Store SECRET_KEY, DEBUG, and ALLOWED_HOSTS in `.env` file (local) and Heroku config vars (production).
+
+**Why:** 
+- Keeps secrets out of GitHub where anyone can see them
+- Allows different settings for local testing vs. live site
+- If SECRET_KEY is exposed, hackers can access user sessions
+
+**How:** Used `python-decouple` library, `.env` protected by `.gitignore`
+
+---
+
+### DEBUG Mode Off in Production
+**What:** DEBUG=True locally, DEBUG=False on Heroku
+
+**Why:**
+- DEBUG=True shows detailed error messages with file paths and settings
+- Hackers can use this information to find weaknesses
+- Users should only see friendly error messages
+
+**How:** Set via environment variables (different for local vs. Heroku)
+
+---
+
+### Login Required
+**What:** Users must log in to submit services, book services, and access dashboard
+
+**Why:**
+- Stops spam and fake submissions
+- Makes users accountable for their actions
+- Protects against bots
+
+**Protected pages:** Submit service, book service, edit/delete, dashboard
+
+---
+
+### Owner-Only Access
+**What:** Users can only edit/delete their own services and bookings
+
+**Why:**
+- Stops users from deleting others' services
+- Prevents sabotage and data tampering
+- Builds trust in the platform
+
+**How:** Check if `request.user == service.provider` in views
+
+---
+
+### CSRF Protection
+**What:** All forms have `{% csrf_token %}`
+
+**Why:**
+- Stops attackers from tricking users into unwanted actions
+- Ensures forms are submitted from our website, not fake sites
+- Django validates the token automatically
+
+---
+
+### Admin Approval
+**What:** Services need admin approval before showing publicly
+
+**Why:**
+- Prevents spam and scam services
+- Maintains quality and trust
+- Protects clients from fake listings
+
+**How:** `is_approved` field (default: False), only show approved services
+
+---
+
+### Input Validation
+**What:** All forms validated using Django forms
+
+**Why:**
+- Stops bad data from breaking the site
+- Prevents SQL injection and XSS attacks
+- Ensures data is formatted correctly
+
+**Checks:** Required fields, max lengths, valid dates, valid prices
+
+---
+
+### Password Security
+**What:** Django's built-in password hashing
+
+**Why:**
+- Passwords never stored as plain text
+- If database is stolen, passwords are still safe
+- Uses industry-standard encryption
+
+---
+
+### Future Improvements
+- Rate limiting (stop spam submissions)
+- Email verification for new accounts
+- Two-factor authentication
+- Password reset functionality
 
 
-  ### Deployment:
+ ### Deployment:
 
   - This project was deployed using github and Heroku:
   - Fork or clone this repo
