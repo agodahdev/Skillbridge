@@ -24,102 +24,337 @@
   Custom 404 page  
   Testing with Django + validation tools
 
-# SkillBridge - UX Design Documentation
+ # SkillBridge - UX Design Documentation
 
-## Design Overview
+ ## Design Overview
 
-SkillBridge is designed for simplicity and trust, connecting service providers with clients through a clean, professional interface.
+ SkillBridge is designed for simplicity and trust, connecting service providers with clients through a clean, professional interface.
 
-## Color Scheme
+ ## Color Scheme
 
-- **Bootstrap Primary Blue (#0d6efd):** Primary actions and links - conveys trust
-- **White Background:** Clean, uncluttered interface
-- **Success Green:** Approved services and positive feedback
-- **Danger Red:** Delete/cancel actions and warnings
-- **Dark Text (#212529):** High contrast for readability
+ - **Bootstrap Primary Blue (#0d6efd):** Primary actions and links - conveys trust
+ - **White Background:** Clean, uncluttered interface
+ - **Success Green:** Approved services and positive feedback
+ - **Danger Red:** Delete/cancel actions and warnings
+ - **Dark Text (#212529):** High contrast for readability
 
-**Accessibility:** All colors meet WCAG 2.1 AA contrast standards (4.5:1 minimum).
+ **Accessibility:** All colors meet WCAG 2.1 AA contrast standards (4.5:1 minimum).
 
-## Typography
+ ## Typography
 
-- **System Font Stack:** Uses native device fonts for fast loading and familiarity
-- **Font Sizes:** Clear hierarchy with h1-h6 for headings, 16px body text
-- **Readability:** High contrast between text and backgrounds
+ - **System Font Stack:** Uses native device fonts for fast loading and familiarity
+ - **Font Sizes:** Clear hierarchy with h1-h6 for headings, 16px body text
+ - **Readability:** High contrast between text and backgrounds
 
-## Layout Decisions
+ ## Layout Decisions
 
-### Navigation
-- **Fixed navbar** with logo, main navigation, and user actions
-- **Responsive collapse** to hamburger menu on mobile
+ ### Navigation
+ - **Fixed navbar** with logo, main navigation, and user actions
+ - **Responsive collapse** to hamburger menu on mobile
 
-### Key Pages
+ ### Key Pages
 
-**Homepage**
-- Hero section with clear value proposition
-- Prominent call-to-action buttons
-- Simple three-column feature layout
+ **Homepage**
+ - Hero section with clear value proposition
+ - Prominent call-to-action buttons
+ - Simple three-column feature layout
 
-**Service List**
-- Card-based grid layout for easy scanning
-- Responsive: 3 columns → 2 → 1 based on screen size
-- Status badges for quick recognition (Pending/Approved)
+ **Service List**
+ - Card-based grid layout for easy scanning
+ - Responsive: 3 columns → 2 → 1 based on screen size
+ - Status badges for quick recognition (Pending/Approved)
 
-**Dashboard**
-- Tabbed interface separating:
-  - My Services (what I offer)
-  - My Bookings (what I've booked)
-  - Client Requests (bookings on my services)
-- Reduces clutter by showing relevant content only
+ **Dashboard**
+ - Tabbed interface separating:
+ - My Services (what I offer)
+ - My Bookings (what I've booked)
+ - Client Requests (bookings on my services)
+ - Reduces clutter by showing relevant content only
 
-**Forms**
-- Single-column layout for clear progression
-- Labels above fields
-- Validation feedback on submission
+ **Forms**
+ - Single-column layout for clear progression
+ - Labels above fields
+ - Validation feedback on submission
 
-## User Flow
+ ## User Flow
 
-### Service Provider Journey
-Sign Up → Submit Service → Admin Approval → Manage Services → View Client Bookings
-
-
-### Client Journey
-Browse Services → Sign Up/Login → Book Service → Track Bookings in Dashboard
+ ### Service Provider Journey
+ Sign Up → Submit Service → Admin Approval → Manage Services → View Client Bookings
 
 
-## Key UX Principles
+ ### Client Journey
+ Browse Services → Sign Up/Login → Book Service → Track Bookings in Dashboard
 
-1. **Progressive Disclosure:** Browse without login, authenticate for actions
-2. **Clear Feedback:** Success/error messages and confirmation modals
-3. **Consistency:** Uniform button styles, card layouts, and spacing
-4. **Mobile-First:** Responsive design works on all devices
 
-## Accessibility Features
+ ## Key UX Principles
 
-- Semantic HTML with proper heading hierarchy
-- Keyboard navigation support
-- ARIA labels on interactive elements
-- Form labels associated with inputs
-- High color contrast throughout
+ 1. **Progressive Disclosure:** Browse without login, authenticate for actions
+ 2. **Clear Feedback:** Success/error messages and confirmation modals
+ 3. **Consistency:** Uniform button styles, card layouts, and spacing
+ 4. **Mobile-First:** Responsive design works on all devices
 
-## Bootstrap Components Used
+ ## Accessibility Features
 
-- Navbar, Cards, Tabs, Modals, Forms, Alerts, Badges, Buttons
+ - Semantic HTML with proper heading hierarchy
+ - Keyboard navigation support
+ - ARIA labels on interactive elements
+ - Form labels associated with inputs
+ - High color contrast throughout
 
-## Responsive Breakpoints
+ ## Bootstrap Components Used
 
-- **Mobile:** < 576px (1 column)
-- **Tablet:** 576-992px (2 columns)
-- **Desktop:** > 992px (3 columns)
+ - Navbar, Cards, Tabs, Modals, Forms, Alerts, Badges, Buttons
+
+ ## Responsive Breakpoints
+
+ - **Mobile:** < 576px (1 column)
+ - **Tablet:** 576-992px (2 columns)
+ - **Desktop:** > 992px (3 columns)
+
+ **Result:** A professional, accessible platform that prioritizes clarity and ease of use for both service providers and clients.
+
+ # SkillBridge - User Stories
+
+ ## Agile Methodology
+
+ This project was developed using Agile methodology with user stories tracked in GitHub Issues. All stories were implemented and closed upon completion.
+
+ **GitHub Project Board:** https://github.com/agodahdev/Skillbridge/issues
 
 ---
 
-**Result:** A professional, accessible platform that prioritizes clarity and ease of use for both service providers and clients.
+ ## User Stories by Role
 
+ ### Client User Stories
+ 
+ #### User Story #1: Register & Login
+ **As a** Client  
+ **I want to** register and log in/out  
+ **So that I can** securely use the application
 
+ **Acceptance Criteria:**
+ - I can create an account using a username and password
+ - I can log in and log out securely
+ - I see an error if the login fails
 
-  ## How to Use the Website
+ **Tasks:**
+ - Create user registration form
+ - Set up login/logout views and templates
+ - Test and validate flow
 
-  ### For New Users:
+ **Status:** ✅ Completed  
+ **Implementation:** Django authentication system, signup/login templates, redirect flows
+
+ ---
+
+ #### User Story #2: View Available Services
+ **As a** Client  
+ **I want to** see a list of approved services  
+ **So that I can** choose which one to book
+
+ **Acceptance Criteria:**
+ - I can view service title, category, and rate
+ - I can see services that are approved by an admin
+ - I can search or filter services
+
+ **Tasks:**
+ - Show list of services
+ - Only show services that are approved (is_approved=True)
+ - Create a view template
+ - Allow unauthenticated users to view
+
+ **Status:** ✅ Completed  
+ **Implementation:** `/services/all/` page with service cards, filtered by is_approved=True
+
+ ---
+
+ #### User Story #3: Book a Service
+ **As a** Client  
+ **I want to** book a listed service  
+ **So that I can** request help from a provider
+
+ **Acceptance Criteria:**
+ - I can choose a service and date
+ - I can submit a booking with a message
+ - The booking is marked as pending
+ - The provider is notified
+
+ **Tasks:**
+ - Create 'BookingRequest' model
+ - Build a booking form and validation
+ - Add pending status on submission
+
+ **Status:** ✅ Completed  
+ **Implementation:** BookingRequest model, booking form modal, dashboard view for tracking
+
+ ---
+
+ ### Service Provider User Stories 
+
+ #### User Story #4: Post New Service
+ **As a** Provider  
+ **I want to** create a new service listing  
+ **So that** clients can find and book me
+
+ **Acceptance Criteria:**
+ - I can input a service name, description, category, and price
+ - My service is saved with a "pending approval" status
+ - I see a confirmation message after submitting
+
+ **Tasks:**
+ - Build SkillService model
+ - Use SQLite database (default)
+ - Migrate model to database
+ - Create service submission form
+ - Auto-flag services submission form
+ - Restrict form to logged-in users
+ - Save service with 'is_approved=False'
+
+ **Status:** ✅ Completed  
+ **Implementation:** SkillService model with is_approved field, `/services/submit/` form, @login_required decorator
+
+ ---
+
+ #### User Story #5: Edit/Delete My Service
+ **As a** Provider  
+ **I want to** edit or delete my services  
+ **So that I can** manage my offerings easily
+
+ **Acceptance Criteria:**
+ - I can see a list of my services
+ - I can edit or delete each one
+ - I cannot access other's services
+
+ **Tasks:**
+ - Build views for update/delete
+ - Add confirmation modal before deleting
+ - Restrict access to owner only
+
+ **Status:** ✅ Completed  
+ **Implementation:** Edit/Delete buttons in dashboard, confirmation modal, owner validation in views
+
+ ---
+
+ #### User Story #6: View My Bookings
+ **As a** Provider  
+ **I want to** view client booking requests  
+ **So that I can** manage my schedule and respond
+
+ **Acceptance Criteria:**
+ - I can view a list of pending, accepted, or rejected bookings
+ - I can change the status of each request
+ - I see client message and details
+
+ **Tasks:**
+ - Build booking dashboard for providers
+ - Add status update actions
+ - Filter bookings by provider
+
+ **Status:** ✅ Completed  
+ **Implementation:** Dashboard "Client Requests" tab showing bookings on provider's services
+
+ ---
+
+ ### Admin User Stories
+
+ #### User Story #7: Approve or Reject Services
+ **As an** Admin  
+ **I want to** approve or reject service listings  
+ **So that** only quality services are available to clients
+
+ **Acceptance Criteria:**
+ - I see a list of unapproved services
+ - I can approve or reject them
+ - Approved services appear to the public
+
+ **Tasks:**
+ - Add admin-only dashboard
+ - Build approve/reject buttons 
+ - Update service status on action
+
+ **Status:** ✅ Completed  
+ **Implementation:** Django admin panel with SkillService management, is_approved toggle
+
+---
+
+ ### Developer User Stories
+
+ #### User Story #8: Frontend CRUD (No Admin Panel)
+ **As a** user  
+ **I want to** manage all my data from UI  
+ **So that I don't** have to use Django admin panel
+
+ **Acceptance Criteria:**
+ - I can create, read, update, and delete services/bookings
+ - All operations happen from the frontend
+ - Admin panel is hidden from regular users
+
+ **Tasks:**
+ - Build CRUD views and templates
+ - Add delete confirmation modals
+ - Enforce role-based access control
+
+ **Status:** ✅ Completed  
+ **Implementation:** Complete CRUD functionality via web interface, confirmation modals, permission checks
+
+ ---
+
+ #### User Story #9: Production-Ready Setup
+ **As a** Developer  
+ **I want to** ensure the application is secure and production-ready  
+ **So that** it can be deployed safely
+
+ **Acceptance Criteria:**
+ - DEBUG = False in production settings
+ - GitHub project is public
+ - Testing write up is included
+ - Secure user input validation is in place
+
+ **Tasks:**
+ - Update settings for production
+ - Write testing documentation
+ - Run tests and validate inputs
+
+ **Status:** ✅ Completed  
+ **Implementation:** Environment variables, DEBUG=False on Heroku, security settings, form validation
+
+ #### User Story #10: Setup Project Infrastructure
+ **As a** Developer  
+ **I want to** set up the Django project and environment correctly  
+ **So that** the foundation is ready for future development
+
+ **Acceptance Criteria:**
+ - A Django project is initialized and running
+ - The main app (services) is created and registered
+ - Server runs successfully on localhost
+ - Virtual environment is activated and Django is installed
+
+ **Tasks:**
+ - Create virtual environment and install Django
+ - Start Django project and services app
+ - Add 'services' app to INSTALLED_APPS
+ - Run initial makemigrations and migrate
+
+ **Status:** ✅ Completed  
+ **Implementation:** Complete Django project structure with skillbridge_project and services/accounts apps
+
+ ---
+
+ ## Summary
+
+ ### Total User Stories: 10
+ - **Client Stories:** 3
+ - **Provider Stories:** 3
+ - **Admin Stories:** 1
+ - **Developer Stories:** 3
+
+ ### All Stories Status: ✅ Complete
+
+ All user stories were tracked in GitHub Issues and have been successfully implemented and closed. The project demonstrates full CRUD functionality, authentication, authorization, and production deployment.
+
+ ## How to Use the Website
+
+ ### For New Users:
   1. Click on **"Sign Up"** to create a new account.
   2. Log in using your credentials.
   3. As a regular user, you can:
